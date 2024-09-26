@@ -169,9 +169,15 @@
 
         // Function to trigger the download
         function downloadFile() {
+            // Use a relative URL or a server-side URL instead of a local file path
+            var fileUrl = '/downloads/PYTHON_IDE.exe';
+            
+            // Create a temporary anchor element
             var link = document.createElement('a');
-            link.href = 'c:\\Users\\joruz\\output\\PYTHON_IDE.exe';
+            link.href = fileUrl;
             link.download = 'PYTHON_IDE.exe';
+            
+            // Append the link to the body, click it, and remove it
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
