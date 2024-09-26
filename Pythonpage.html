@@ -169,18 +169,29 @@
 
         // Function to trigger the download
         function downloadFile() {
-            // Use a relative URL or a server-side URL instead of a local file path
             var fileUrl = '/downloads/PYTHON_IDE.exe';
+            console.log('Attempting to download file from:', fileUrl);
             
-            // Create a temporary anchor element
-            var link = document.createElement('a');
-            link.href = fileUrl;
-            link.download = 'PYTHON_IDE.exe';
-            
-            // Append the link to the body, click it, and remove it
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Use fetch to check if the file exists
+            fetch(fileUrl)
+                .then(response => {
+                    console.log('Server response:', response.status, response.statusText);
+                    if (response.ok) {
+                        // File exists, proceed with download
+                        var link = document.createElement('a');
+                        link.href = fileUrl;
+                        link.download = 'PYTHON_IDE.exe';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        alert('File not available on site. Status: ' + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while trying to download the file.');
+                });
         }
     </script>
 </body>
